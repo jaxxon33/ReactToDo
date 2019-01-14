@@ -12,8 +12,8 @@ export default class App extends Component {
       },
       {
         id: 2,
-        title: 'Take rubbish',
-        completed: false
+        title: 'Take rubbish out',
+        completed: true
       },
       {
         id: 3,
