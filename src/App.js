@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import Todos from './Todos';
 import './App.css';
+import uuid from 'uuid'
 
 export default class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: uuid.v4(),
         title: 'Take trash',
         completed: false
       },
       {
-        id: 2,
+        id: uuid.v4(),
         title: 'Take rubbish out',
         completed: false
       },
       {
-        id: 3,
+        id: uuid.v4(),
         title: 'Take garbage',
         completed: false
       }
@@ -41,28 +42,35 @@ export default class App extends Component {
     })
   }
 
-  addTodo = () => {
+  // TODO: fix this so logs value from form
+  addTodo = (e) => {
+    e.preventDefault()
+    console.log(e.target)
     this.setState({
-      todos: [...this.state.todos.push(
-        {
-          id: 6,
-          title: "hi",
-          completed: false
-        }
-      )]
+      todos: [...this.state.todos,
+      {
+        id: uuid.v4(),
+        title: this.state.title,
+        completed: false
+      }],
+      title: ''
     })
   }
+
+  // update state as input changes
+  onChange = (e) => this.setState({
+    [e.target.name]: e.target.value
+  })
 
   render() {
     // console.log(this.state.todos)
     return (
       <div className="App">
         <Todos todos={this.state.todos} markComplete={this.markComplete} delete={this.delete} />
-        <form>
-          <input type="text" placeholder="Enter todo" onSubmit={this.addTodo} />
+        <form onSubmit={this.addTodo}>
+          <input type="text" name="title" placeholder="Add todo" value={this.state.title} onChange={this.onChange} />
           <input type="submit" value="Add!"></input>
         </form>
-
       </div>
     );
   }
